@@ -1,34 +1,51 @@
-import React ,{ useEffect, useState} from "react";
-import * as xlsx  from "xlsx";
+import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Table, Container } from '@mantine/core';
+import Navbar from "./navbar";
 
-const readUploadFile = (e) => {
-    e.preventDefault();
-    if (e.target.files) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const data = e.target.result;
-            const workbook = xlsx.read(data, { type: "array" });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
-            const json = xlsx.utils.sheet_to_json(worksheet);
-            console.log(json);
-        };
-        reader.readAsArrayBuffer(e.target.files[0]);
-    }
+function HomePage() {
+  let [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get("/api/getAllRecords").then(json => {
+      setData(json.data)      
+    }).catch(error => {
+      console.log(error);
+    })
+  }, []);
+  
+  const rows = data.map((element) => (
+    <tr key={element.name}>
+      <td>{element.name}</td>
+      <td>{element.phone}</td>
+      <td>{element.email}</td>
+      <td>{element.location}</td>
+    </tr>
+  ));
+  return (
+    <div>
+      <Navbar></Navbar>
+      <Container
+        mt={"xl"}
+        size={"md"}
+        my={20}
+        style={{
+          minHeight: "100vh",
+        }}
+      >
+        <Table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </Container>
+    </div> 
+    );
 }
-
-function HomePage (){
-    return(
-        <form>
-            <label htmlFor="upload">Upload File</label>
-            <input
-                type="file"
-                name="upload"
-                id="upload"
-                onChange={readUploadFile}
-            />
-        </form>
-    )
-}
-
-export default HomePage;
+export default HomePage
