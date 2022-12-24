@@ -51,10 +51,17 @@ exports.findOneDocumentByIdAndUpdate = async function (model, id, update){
   return data;
 }
 
-//create
+//create one
 exports.createDocument = async function (model,obj){
   logger.debug("Creating document",obj,"in model",model);
   let data = await model.create(obj);
+  return data;
+}
+
+//create multiple
+exports.insertMultipleDocuments = async function (model,arrayOfObj){
+  logger.debug("Inserting array of objects",arrayOfObj,"in model",model);
+  let data = await model.insertMany(arrayOfObj);
   return data;
 }
 

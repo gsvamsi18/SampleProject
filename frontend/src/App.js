@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Component/homepage";
-import insertFromExcel from "./Component/truecallerExcelData";
-
+import InsertFromExcel from "./Component/truecallerExcelData";
+import ExportData from "./Component/truecallerSampleExcel";
 
 function App() {
 	return (
@@ -9,7 +9,8 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<HomePage />} />
-					<Route path="/insertFromExcel" element={<insertFromExcel />} />
+					<Route path="/insertFromExcel" element={<InsertFromExcel />} />
+					<Route path="/exportData" element={<ExportData />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

@@ -20,6 +20,20 @@ module.exports.insertTruecallerUser = async (req, res) => {
     res.status(500).json(err)
   }
 }
+
+module.exports.insertManyTruecallerUsers = async (req,res) => {
+  try{
+    console.log(req.body)
+    console.log(typeof req.body[0].phone)
+    const result = await asyncDbLib.insertMultipleDocuments(truecallerUserModel,req.body)
+    logger.debug(result)
+    res.status(200).json("ok")
+  }
+  catch(err){
+    logger.debug(err)
+    res.status(500).json(err)
+  }
+}
 // function to delete a record
 module.exports.deleteTruecallerUser = async (req, res) => {
   try {
