@@ -61,7 +61,8 @@ exports.createDocument = async function (model,obj){
 //create multiple
 exports.insertMultipleDocuments = async function (model,arrayOfObj){
   logger.debug("Inserting array of objects",arrayOfObj,"in model",model);
-  let data = await model.insertMany(arrayOfObj);
+  //ordered will be used to skip some records and to continue the process incase of any errors.
+  let data = await model.insertMany(arrayOfObj,{ordered : false});
   return data;
 }
 
@@ -80,9 +81,9 @@ exports.getDistinctValuesOfFieldSorted = async function(model,field){
 }
 
 //find with filter
-exports.getAllDocumentsWithFilter = async function(model,filter){
+exports.getAllDocumentsWithFilter = async function(model,filter,sort){
   logger.debug("Getting all documents from model",model,"with filter",filter);
-  let data = await model.find(filter);
+  let data = await model.find(filter).sort(sort);
   return data;
 }
 

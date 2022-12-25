@@ -1,18 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Component/homepage";
-import InsertFromExcel from "./Component/truecallerExcelData";
 import ExportData from "./Component/truecallerSampleExcel";
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
+import Insertion from "./Component/tabsForInsertion";
 
 function App() {
 	return (
 		<div className="App">
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<HomePage />} />
-					<Route path="/insertFromExcel" element={<InsertFromExcel />} />
-					<Route path="/exportData" element={<ExportData />} />
-				</Routes>
-			</BrowserRouter>
+			<MantineProvider withNormalizeCSS withGlobalStyles>
+				<NotificationsProvider position="top-right" zIndex={2077}>
+					<BrowserRouter>
+						<Routes>
+							<Route path="/" element={<HomePage />} />
+							<Route path="/exportData" element={<ExportData />} />
+							<Route path="/insertUser" element={<Insertion />} />
+						</Routes>
+					</BrowserRouter>
+				</NotificationsProvider>
+			</MantineProvider>
 		</div>
 	);
 }

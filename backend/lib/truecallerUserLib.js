@@ -11,16 +11,25 @@ module.exports.insertTruecallerUser = async (req, res) => {
       location: req.body.location,
       email: req.body.email
     }
-    const result = await asyncDbLib.createDocument(truecallerUserModel, data)
-    logger.debug(result)
-    res.status(200).json(result)
+    //checking if given phone number already exists in DB 
+    let duplicateRecord = await asyncDbLib.getOneDocumentByFilter(truecallerUserModel, { phone: req.body.phone })
+    logger.debug("duplicate Record is ", duplicateRecord)
+    if (duplicateRecord) {
+      res.status(409).json(duplicateRecord);
+    }
+    else {
+      const result = await asyncDbLib.createDocument(truecallerUserModel, data)
+      logger.debug(result)
+      res.status(200).json(result)
+    }
   }
   catch (err) {
-    logger.debug(err)
+    logger.error(err)
     res.status(500).json(err)
   }
 }
 
+// function to insert multiple records 
 module.exports.insertManyTruecallerUsers = async (req,res) => {
   try{
     console.log(req.body)
@@ -30,10 +39,18 @@ module.exports.insertManyTruecallerUsers = async (req,res) => {
     res.status(200).json("ok")
   }
   catch(err){
-    logger.debug(err)
-    res.status(500).json(err)
+    //Checking whether the error is due to the insertion of duplicates
+    if(err.code == 11000){
+      console.log("duplicate values")
+      res.status(409).json(err)
+    }
+    else{
+      logger.error(err.code)
+      res.status(500).json(err)
+    }
   }
 }
+
 // function to delete a record
 module.exports.deleteTruecallerUser = async (req, res) => {
   try {
@@ -45,7 +62,7 @@ module.exports.deleteTruecallerUser = async (req, res) => {
     res.status(200).json(result)
   }
   catch (err) {
-    logger.debug(err)
+    logger.error(err)
     res.status(500).json(err)
   }
 }
@@ -53,11 +70,21 @@ module.exports.deleteTruecallerUser = async (req, res) => {
 //function to return all records
 module.exports.getAllRecords = async (req, res) => {
   try {
-    const allrecords = await asyncDbLib.getAllDocumentsWithFilter(truecallerUserModel, {})
+    logger.debug("request query =", req.query);
+    let filter = {
+      $and: [
+        { name: { $regex: req.query.name, $options: "i" } },
+        { phone: { $regex: req.query.phone, $options: "i" } },
+        { location: { $regex: req.query.location, $options: "i" } },
+        { email: { $regex: req.query.email, $options: "i" } },
+      ]
+    };
+    const allrecords = await asyncDbLib.getAllDocumentsWithFilter(truecallerUserModel, filter, { "updatedAt": -1 })
     logger.debug("allrecords =", allrecords)
     res.status(200).json(allrecords)
   }
   catch (err) {
+    logger.error(err)
     res.status(500).json(err);
   }
 }
@@ -72,6 +99,7 @@ module.exports.getRecordByNumber = async (req, res) => {
     res.status(200).json(result)
   }
   catch (err) {
+    logger.error(err)
     res.status(500).json(err);
   }
 }
