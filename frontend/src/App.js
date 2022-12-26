@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Component/homepage";
 import ExportData from "./Component/truecallerSampleExcel";
 import { MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
 import Insertion from "./Component/tabsForInsertion";
+import { NotificationsProvider } from '@mantine/notifications';
 
 function App() {
 	return (
