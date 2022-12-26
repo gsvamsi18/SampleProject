@@ -11,10 +11,10 @@ function App() {
 			<MantineProvider withNormalizeCSS withGlobalStyles>
 				<NotificationsProvider position="top-right" zIndex={2077}>
 					<BrowserRouter>
-						<Routes>
+						<Routes>						
 							<Route path="/" element={<HomePage />} />
 							<Route path="/exportData" element={<ExportData />} />
-							<Route path="/add" element={<Insertion />} />
+							<Route path="/add" element={<Insertion />} />							
 						</Routes>
 					</BrowserRouter>
 				</NotificationsProvider>
