@@ -14,7 +14,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<HomePage />} />
 							<Route path="/exportData" element={<ExportData />} />
-							<Route path="/insertUser" element={<Insertion />} />
+							<Route path="/add" element={<Insertion />} />
 						</Routes>
 					</BrowserRouter>
 				</NotificationsProvider>

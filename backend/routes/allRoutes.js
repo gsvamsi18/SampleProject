@@ -8,5 +8,7 @@ router.get("/getRecordByNumber",truecallerUserLib.getRecordByNumber)
 router.get('/deleteTruecallerUser',truecallerUserLib.deleteTruecallerUser)
 router.post('/insertTruecallerUser',truecallerUserLib.insertTruecallerUser)
 router.post('/insertManyTruecallerUsers',truecallerUserLib.insertManyTruecallerUsers)
+router.post("/findAndUpdate", truecallerUserLib.findAndUpdate)
+router.get("/getAllRecordsWithFilterPagination", truecallerUserLib.getAllRecordsWithFilterPagination)
 
 module.exports = router;

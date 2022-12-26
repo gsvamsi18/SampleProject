@@ -1,7 +1,7 @@
 import { Tabs, Container } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings, IconForms, IconFile, IconFiles, IconUser, IconUsers } from '@tabler/icons';
-import Adduser from './insertViaForm';
-import InsertFromExcel from './insertViaExcel';
+import Adduser from './insertUserViaForm';
+import InsertFromExcel from './insertUsersViaExcel';
 import Navbar from "./navbar";
 
 function Insertion() {
