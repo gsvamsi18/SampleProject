@@ -85,10 +85,10 @@ module.exports.getAllRecordsWithFilterPagination = async (req, res) => {
   logger.debug("request query =", req.query);
   let filter = {
     $and: [
-      { name: { $regex: req.query.name, $options: "i" } },
-      { phone: { $regex: req.query.phone, $options: "i" } },
-      { location: { $regex: req.query.location, $options: "i" } },
-      { email: { $regex: req.query.email, $options: "i" } },
+      { name: { $regex: req?.query?.name, $options: "i" } },
+      { phone: { $regex: req?.query?.phone, $options: "i" } },
+      { location: { $regex: req?.query?.location, $options: "i" } },
+      { email: { $regex: req?.query?.email, $options: "i" } },
     ]
   };
   //Getting limited records from db for the required required page 
