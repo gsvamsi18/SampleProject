@@ -93,7 +93,7 @@ module.exports.getAllRecordsWithFilterPagination = async (req, res) => {
   };
   //Getting limited records from db for the required required page 
   truecallerUserModel.paginate(
-    filter, { page: req.query.page || 1, limit: req.query.limit || 10, sort: { "updatedAt": -1 } },
+    filter, { page: req?.query?.page || 1, limit: req?.query?.limit || 10, sort: { "updatedAt": -1 } },
     (err, result) => {
       if (err) {
         logger.error(err)
@@ -130,7 +130,7 @@ module.exports.findAndUpdate = async (req, res) => {
     let duplicateRecord = false
     if (data.oldPhone != data.phone) {
       //checking if updated phone number already exits in DB
-      duplicateRecord = await asyncDbLib.getOneDocumentByFilter(truecallerUserModel, { phone: req.body.phone })
+      duplicateRecord = await asyncDbLib.getOneDocumentByFilter(truecallerUserModel, { phone: req?.body?.phone })
       logger.debug("duplicate Record is ", duplicateRecord)
     }
     if (duplicateRecord) {
