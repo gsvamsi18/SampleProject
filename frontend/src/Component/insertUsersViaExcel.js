@@ -50,7 +50,6 @@ function InsertFromExcel() {
   const excelToJSON = async (e) => {
     setValue(e)
     if (e) {
-      console.log("hi")
       const reader = new FileReader();
       reader.onload = async (e) => {
         const data = e.target.result;
@@ -59,7 +58,6 @@ function InsertFromExcel() {
         const worksheet = workbook.Sheets[sheetName];
         const json = xlsx.utils.sheet_to_json(worksheet);
         setMyData(json)
-        console.log(json);
       }
       reader.readAsArrayBuffer(e);
     };
