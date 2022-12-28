@@ -4,6 +4,7 @@ import { Table, Modal, Input, Container, Stack, TextInput, Button, Group, Space,
 import { BsSearch } from "react-icons/bs";
 import { showNotification } from '@mantine/notifications';
 import Util from "./Service/util"
+import * as xlsx from 'xlsx';
 
 function HomePage() {
   const [opened, setOpened] = useState(false);
@@ -35,6 +36,25 @@ function HomePage() {
     }).catch(error => {
       console.log(error);
     })
+  }
+
+  //function to download the records of truecallersusers
+  const downloadTrueCallerRecords = async () => {
+    let content = await axios.get("/api/getAllRecords")
+    let allRecords = content.data
+    let data = []
+    for (let x of allRecords) {
+      data.push({
+        name: x.name,
+        phone: x.phone,
+        email: x.email,
+        location: x.location
+      })
+    }
+    const worksheet = xlsx.utils.json_to_sheet(data);
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    xlsx.writeFile(workbook, "TrueCallerUsersDetails.xlsx");
   }
 
   const showInvalidMobileNotification = () => {
@@ -167,74 +187,75 @@ function HomePage() {
       <Container
         size={"lg"} my={20} style={{ minHeight: "80vh" }}
       >
-        <div>
-          <Grid>
-            <Grid.Col sm={6} md={2.4} lg={1.5}>
-              <Select
-                id="pageLimit"
-                radius="lg"
-                data={pageLimits}
-                value={limit.toString()}
-                maxDropdownHeight={200}
-                onChange={
-                  (event) => {
-                    setLimit(event)
-                    setPage(1)
-                  }
-                }
-                dropdownComponent="div"
-                transition="pop-top-left"
-                transitionDuration={200}
-                transitionTimingFunction="ease" />
-            </Grid.Col>
-            <Grid.Col sm={6} md={2.4} lg={2.6}>
-              <Input
-                id='name'
-                size={"sm"}
-                placeholder="Search by Name"
-                radius="lg"
-                onChange={updateSearchFields}
-                onKeyUp={search}
-                rightSection={<BsSearch />}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} md={2.4} lg={2.6}>
-              <Input
-                id='phone'
-                size={"sm"}
-                placeholder="Search by Phone"
-                radius="lg"
-                onChange={updateSearchFields}
-                onKeyUp={search}
-                rightSection={<BsSearch />}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} md={2.4} lg={2.6}>
-              <Input
-                id='email'
-                size={"sm"}
-                placeholder="Search by Email"
-                radius="lg"
-                onChange={updateSearchFields}
-                onKeyUp={search}
-                rightSection={<BsSearch />}
-              />
-            </Grid.Col>
-            <Grid.Col sm={6} md={2.4} lg={2.6}>
-              <Input
-                id='location'
-                size={"sm"}
-                placeholder="Search by Location"
-                radius="lg"
-                onChange={updateSearchFields}
-                onKeyUp={search}
-                rightSection={<BsSearch />}
-              />
-            </Grid.Col>
-          </Grid>
-        </div>
         <Table striped highlightOnHover horizontalSpacing="sm" verticalSpacing="sm">
           <thead>
+            <tr >
+              <th style={{ textAlign: "center" }}>
+                <Select
+                  id="pageLimit"
+                  radius="lg"
+                  data={pageLimits}
+                  value={limit.toString()}
+                  maxDropdownHeight={200}
+                  onChange={
+                    (event) => {
+                      setLimit(event)
+                      setPage(1)
+                    }
+                  }
+                  dropdownComponent="div"
+                  transition="pop-top-left"
+                  transitionDuration={200}
+                  transitionTimingFunction="ease"
+                  style={{ "font-weight": "400" }} />
+              </th>
+              <th style={{ textAlign: "center" }}>
+                <Input
+                  id='name'
+                  size={"sm"}
+                  placeholder="Search by Name"
+                  radius="lg"
+                  onChange={updateSearchFields}
+                  onKeyUp={search}
+                  rightSection={<BsSearch />}
+                />
+              </th>
+              <th style={{ textAlign: "center" }}>
+                <Input
+                  id='phone'
+                  size={"sm"}
+                  placeholder="Search by Phone"
+                  radius="lg"
+                  onChange={updateSearchFields}
+                  onKeyUp={search}
+                  rightSection={<BsSearch />}
+                />
+              </th>
+              <th style={{ textAlign: "center" }}>
+                <Input
+                  id='email'
+                  size={"sm"}
+                  placeholder="Search by Email"
+                  radius="lg"
+                  onChange={updateSearchFields}
+                  onKeyUp={search}
+                  rightSection={<BsSearch />}
+                />
+              </th>
+              <th style={{ textAlign: "center" }}>
+                <Input
+                  id='location'
+                  size={"sm"}
+                  placeholder="Search by Location"
+                  radius="lg"
+                  onChange={updateSearchFields}
+                  onKeyUp={search}
+                  rightSection={<BsSearch />}
+                />
+              </th>
+            </tr>
+          </thead>
+          <thead style={{ position: "sticky", "insetBlockStart": 0, backgroundColor: "white" }}>
             <tr>
               <th style={{ textAlign: "center" }}> <Text size="sm"> S.No  </Text></th>
               <th style={{ textAlign: "center" }}> <Text size="sm"> Name  </Text></th>
@@ -246,8 +267,8 @@ function HomePage() {
           <tbody style={{ cursor: "pointer" }}>{rows}</tbody>
         </Table>
         <br />
-        <Pagination page={page} onChange={setPage} total={pages} size="md" radius="md" withEdges siblings={1} position="right" />;
-      </Container>
+        <Pagination style={{ position: "sticky", bottom: 0, "paddingTop": "5px", "paddingBottom": "10px", backgroundColor: "white" }} page={page} onChange={setPage} total={pages} size="md" radius="md" withEdges siblings={1} position="right" />
+        <Button onClick={downloadTrueCallerRecords} style={{ display: "inline" }}>Download Records</Button>      </Container>
       <Modal
         centered
         opened={opened}
