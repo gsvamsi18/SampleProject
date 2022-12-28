@@ -21,7 +21,6 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/add" element={<Insertion></Insertion>}></Route>
               <Route path="/login" element={<LoginandSignup></LoginandSignup>}></Route>
-              <Route path="/" element={<HomePage />} />
               {/* <Route path="/forgotPassword" element={<ForgotPassword />} />
 							<Route path="/resetPassword" element={<ResetPassword />} />
 							<Route path="/OtpVerification" element={<OtpVerification />} />
