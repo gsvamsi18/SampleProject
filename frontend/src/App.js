@@ -3,8 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Component/homepage";
 import Insertion from "./Component/tabsForInsertion";
 import LoginandSignup from "./Component/loginsignup";
-import Forbidden from "./Component/forbidden";
-import PageNotFound from "./Component/pageNotFound";
 // import ForgotPassword from "./Component/forgotPassword";
 // import ResetPassword from "./Component/resetPassword";
 // import OtpVerification from "./Component/otpVerification";
