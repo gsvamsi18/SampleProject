@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Component/homepage";
 import Insertion from "./Component/tabsForInsertion";
 import LoginandSignup from "./Component/loginsignup";
+import Forbidden from "./Component/forbidden";
+import PageNotFound from "./Component/pageNotFound";
 // import ForgotPassword from "./Component/forgotPassword";
 // import ResetPassword from "./Component/resetPassword";
 // import OtpVerification from "./Component/otpVerification";
@@ -21,7 +23,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/add" element={<Insertion></Insertion>}></Route>
               <Route path="/login" element={<LoginandSignup></LoginandSignup>}></Route>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/forbidden" element={<Forbidden />} />
+              <Route path="/pageNotFound" element={<PageNotFound />} />
               {/* <Route path="/forgotPassword" element={<ForgotPassword />} />
 							<Route path="/resetPassword" element={<ResetPassword />} />
 							<Route path="/OtpVerification" element={<OtpVerification />} />
