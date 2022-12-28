@@ -124,12 +124,42 @@ function HomePage() {
     }
   }
 
+  //Deleting the user data in database
+  async function deleteTruecallerUser(e) {
+    let temp = {
+      name: oldDetails.name,
+      phone: oldDetails.phone,
+      email: oldDetails.email,
+      location: oldDetails.location,
+      oldPhone: oldDetails.phone
+    }
+    try {
+      let content = await axios.post("/api/deleteTruecallerUser",temp)
+      showNotification({
+        title: "Success",
+        message: "Record deleted Succesfully",
+        autoClose: notificationAutocloseTimeUp,
+        color: "green",
+      })
+      window.location.reload(false);
+    }
+    catch(err){
+      showNotification({
+        title: "Error",
+        message: "Phone Number does not exists",
+        autoClose: notificationAutocloseTimeUp,
+        color: "red"
+      })
+    }
+  }
+
   //To store the data of current updating user and to pop-up the model
   function show(e) {
     setOldDetails(e)
     setNewDetails(e)
     setOpened(true)
   }
+
   const rows = data.map((element, ind) => (
     <tr key={element.phone} onClick={() => { show(element) }}>
       <td style={{ textAlign: "center" }}> {limit * (page - 1) + ind + 1}</td>
@@ -170,7 +200,9 @@ function HomePage() {
 
   const updateCurrentUser = (e) => {
     let temp = { ...newDetails }
+    console.log(temp)
     temp[e.target.id] = e.target.value
+    console.log(temp)
     setNewDetails(temp)
   }
 
@@ -305,7 +337,14 @@ function HomePage() {
           >
           </TextInput>
         </Stack>
-        <Button mt="sm" onClick={update}>Update</Button>
+          <Group>
+            <div>
+              <Button mt="sm" onClick={update}>Update</Button>
+            </div>
+            <div>
+              <Button mt="sm" onClick={deleteTruecallerUser}>Delete</Button>
+            </div>
+          </Group>
       </Modal>
     </div>
   );
