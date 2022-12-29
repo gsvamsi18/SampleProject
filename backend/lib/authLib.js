@@ -126,6 +126,7 @@ module.exports.checkSignupOtp = async (req, res) => {
     logger.debug(req.query);
     let email = req.query.email;
     let otp = req.query.otp
+
     //finding a user with email and otp
     let currentUser = await asyncDbLib.getOneDocumentByFilter(userModel, { email: email, otp: otp })
     if (currentUser) {
