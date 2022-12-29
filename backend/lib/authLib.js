@@ -126,7 +126,6 @@ module.exports.checkSignupOtp = async (req, res) => {
     logger.debug(req.query);
     let email = req.query.email;
     let otp = req.query.otp
-
     //finding a user with email and otp
     let currentUser = await asyncDbLib.getOneDocumentByFilter(userModel, { email: email, otp: otp })
     if (currentUser) {
@@ -143,10 +142,11 @@ module.exports.checkSignupOtp = async (req, res) => {
       }
       logger.debug("payload: ", payload)
       let token = jwt.sign(payload, config.jwt_secret, { expiresIn: '24h' });
-      return res.json(token)
+      return res.status(200).json(token)
     }
     else {
-      res.json("Invalid Otp")
+      logger.debug("invalid otp")
+      res.status(409).json("Invalid Otp")
     }
   }
   catch (err) {

@@ -36,7 +36,7 @@ function Login() {
             Forgot password?
           </Anchor>
           <Button fullWidth mt="xl" type="submit">
-            Login in
+            Login
           </Button>
         </form>
       </Container>

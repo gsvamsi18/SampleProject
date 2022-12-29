@@ -34,11 +34,14 @@ function Signup() {
       ).then(json => {
         showNotification({
           title: "Success",
-          message: "Account created successfully Please Login",
+          message: "Account Registered Succesfully, Please verify your Email",
           autoClose: 4000,
           color: "green"
         })
-        document.getElementById("signUpForm").reset();
+        localStorage.setItem('token', json.data);
+        setTimeout(() => {
+          window.location.replace("/OtpVerification")
+        }, 2000)
       }).catch(err => {
         if (err?.response?.data == "email") {
           showNotification({
@@ -77,7 +80,7 @@ function Signup() {
           <TextInput label="Name" placeholder="Full Name" mt="md" required onChange={(e) => setUserFullName(e.target.value)} />
           <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => setUserPassword(e.target.value)} />
           <Button fullWidth mt="xl" type="submit">
-            Sign in
+            Signup
           </Button>
         </form>
       </Container>
