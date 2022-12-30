@@ -34,13 +34,13 @@ function Signup() {
       ).then(json => {
         showNotification({
           title: "Success",
-          message: "Account Registered Succesfully, Please verify your Email",
+          message: "Account Registered Successfully, Please verify your Email",
           autoClose: 4000,
           color: "green"
         })
         localStorage.setItem('token', json.data);
         setTimeout(() => {
-          window.location.replace("/OtpVerification")
+          window.location.replace("/OTPVerification")
         }, 2000)
       }).catch(err => {
         if (err?.response?.data == "email") {

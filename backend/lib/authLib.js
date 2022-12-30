@@ -146,7 +146,7 @@ module.exports.checkSignupOtp = async (req, res) => {
       return res.status(200).json(token)
     }
     else {
-      logger.debug("invalid otp")
+      logger.debug("Invalid OTP")
       res.status(409).json("Invalid Otp")
     }
   }

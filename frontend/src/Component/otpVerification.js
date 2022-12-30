@@ -4,10 +4,10 @@ import Util from "./Service/util"
 import axios from "axios";
 import { showNotification } from '@mantine/notifications';
 
-function OtpVerification() {
+function OTPVerification() {
   const util = new Util()
   const [OTP, setOTP] = useState(-1)
-  const vertifyOTP = async () => {
+  const verifyOTP = async () => {
     try {
       let user = util.getMail()
       let res = await axios.get("/api/signup/verify?email=" + user + "&otp=" + OTP)
@@ -50,11 +50,11 @@ function OtpVerification() {
         <Title style={{ textAlign: "center" }}>OTP Verification</Title>
         <Text mt={15}>Please enter the OTP shared through email</Text>
         <TextInput size="lg" mt={15} placeholder="Enter OTP" onChange={(e) => { setOTP(e.target.value) }} required />
-        <Button fullWidth mt="xl" onClick={vertifyOTP}>
+        <Button fullWidth mt="xl" onClick={verifyOTP}>
           Submit
         </Button>
       </Paper>
     </Container>
   )
 }
-export default OtpVerification
+export default OTPVerification
